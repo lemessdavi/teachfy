@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Folder;
 
 return new class extends Migration
 {
@@ -13,6 +14,10 @@ return new class extends Migration
     {
         Schema::create('folders', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Folder::class)->nullable(); //father
+            $table->string('name');
+            $table->smallInteger('public')->default(0); //add check constraint [0,1] binary
+            $table->smallInteger('clonable')->default(0); //add check constraint [0,1] binary
             $table->timestamps();
         });
     }
