@@ -3,6 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Answer;
+use App\Models\Card;
+use App\Models\Option;
 
 return new class extends Migration
 {
@@ -13,6 +16,18 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Answer::class);
+            $table->foreignIdFor(Card::class);
+            $table->foreignIdFor(Option::class)->nullable();
+
+            $table->text('difficulty')->nullable();
+
+            //add check constraint [0,1] binary and
+            $table->decimal('grade', $precision = 5, $scale = 2)->nullable(); //maybe change de the name of this column
+
+            $table->text('feedback')->nullable();
+
+
             $table->timestamps();
         });
     }
