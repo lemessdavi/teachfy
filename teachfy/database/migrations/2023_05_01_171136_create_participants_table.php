@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Deck::class);
-            $table->smallInteger("permission"); //add check constraint [0,1,2] 
+            $table->smallInteger("permission"); //TO-DO add check constraint [0,1,2] 
             $table->timestamps();
         });
     }
