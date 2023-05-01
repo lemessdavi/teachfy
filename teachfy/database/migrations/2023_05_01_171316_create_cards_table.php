@@ -22,7 +22,7 @@ return new class extends Migration
             $table->smallInteger('type'); //add check constraint [0,1] 
             $table->text('question');
             $table->text('answer')->nullable();
-            $table->decimal('points', $precision = 5, $scale = 2 ); //this column name needs to be changed
+            $table->decimal('points', $precision = 5, $scale = 2)->nullable(); //this column name needs to be changed
 
             
             $table->timestamps();
