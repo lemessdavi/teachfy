@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
+use App\Models\Participant;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('/paticipants', function () {
+   
+    $participant = Participant::find(1);
+
+    // foreach ($participant->users as $user) {
+    //     echo $user->name . "<br>";
+    // }
+
+    return $participant->users->name;
 });
