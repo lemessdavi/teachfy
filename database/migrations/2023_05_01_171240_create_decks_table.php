@@ -21,11 +21,11 @@ return new class extends Migration
             $table->smallInteger('public')->default(0); //add check constraint [0,1] binary
             $table->smallInteger('clonable')->default(0); //add check constraint [0,1] binary
             $table->smallInteger('feedback')->default(0); //add check constraint [0,1] binary
-            $table->smallInteger('type'); //add check constraint [0,1]          
+            $table->smallInteger('type'); //add check constraint [0,1]
 
-            $table->index(['id', 'type']);
+            $table->unique(['id', 'type']);
 
-            //$table->smallInteger('libernota')->default(0); //add check constraint [0,1] 
+            //$table->smallInteger('libernota')->default(0); //add check constraint [0,1]
             $table->timestamps();
         });
     }
