@@ -20,13 +20,8 @@ Route::get('/', function () {
 });
 
 
-Route::get('/paticipants', function () {
-   
-    $participant = Participant::find(1);
+Route::get('/paticipants/{id}', function ($id) {
+    $participant = Participant::find($id);
 
-    // foreach ($participant->users as $user) {
-    //     echo $user->name . "<br>";
-    // }
-
-    return $participant->users->name;
+    return $participant->user->name;
 });
