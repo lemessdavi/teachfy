@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Option extends Model
 {
@@ -19,5 +20,9 @@ class Option extends Model
     
     public function card():BelongsTo{
         return $this->belongsTo(Card::class);
+    }
+
+    public function answer():HasOne{
+        return $this->hasOne(Answer::class);
     }
 }
