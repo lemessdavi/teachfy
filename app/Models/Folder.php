@@ -17,8 +17,13 @@ class Folder extends Model
         'clonable'
     ];
     
+    #folder father
     public function folder():BelongsTo{
         return $this->belongsTo(Folder::class);
     }
 
+    #child folders
+    public function folders():HasMany{
+        return $this->hasMany(Folder::class);
+    }
 }
