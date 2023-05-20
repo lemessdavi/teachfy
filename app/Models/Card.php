@@ -24,4 +24,15 @@ class Card extends Model
         return $this->belongsTo(Deck::class);
     }
 
+    public function answers():HasMany{
+        return $this->hasMany(Answer::class);
+    }
+
+    public function options():HasMany{
+        return $this->hasMany(Option::class);
+    }
+
+    public function performances():HasMany{
+        return $this->hasMany(Performance::class);
+    }
 }
