@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 use App\Models\Participant;
-use GuzzleHttp\Psr7\Request;
+use OpenAI as GlobalOpenAI;
+use OpenAI\Laravel\Facades\OpenAI;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +29,15 @@ Route::get('/paticipants/{id}', function ($id) {
 });
 
 Route::resource('users', UserController::class);
+
+Route::get('/ask/{n}/{prompt}', function ($n, $prompt) {
+
+    $result = OpenAI::completions()->create([
+        'model' => 'text-davinci-003',
+        'prompt' => 'O texto a seguir é um tema fornecido pelo usuário, formule '. $n .' pergunta sobre o tema '.  $prompt,
+        'max_tokens' => 500,
+    ]);
+     
+    echo $result['choices'][0]['text']; // an open-source, widely-used, server-side scripting language.
+});
+ 
