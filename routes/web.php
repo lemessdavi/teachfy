@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\Participant;
+use GuzzleHttp\Psr7\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +27,5 @@ Route::get('/paticipants/{id}', function ($id) {
 
     return $participant->user->name;
 });
+
+Route::resource('users', UserController::class);
