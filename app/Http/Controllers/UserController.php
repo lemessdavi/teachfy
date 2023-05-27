@@ -54,7 +54,7 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
 
-            return response()->json(['message' => 'Registro alterado com sucesso', 'data' => $user]);
+            return response()->json(['message' => 'Registro:', 'data' => $user]);
         } catch (Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());

@@ -35,7 +35,7 @@ class DeckController extends Controller {
         try {
             $deck = Deck::findOrFail($id);
 
-            return response()->json(['message' => 'Registro alterado com sucesso', 'data' => $deck]);
+            return response()->json(['message' => 'Registro: ', 'data' => $deck]);
         } catch (Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());
