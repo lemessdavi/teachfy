@@ -16,8 +16,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Folder::class)->nullable(); //father
             $table->string('name');
-            $table->smallInteger('public')->default(0); //add check constraint [0,1] binary
-            $table->smallInteger('clonable')->default(0); //add check constraint [0,1] binary
+            $table->smallInteger('public')->default(0); //add check constraint [0,1] binary | added in folderRequest rules 
+            $table->smallInteger('clonable')->default(0); //add check constraint [0,1] binary | added in folderRequest rules 
             $table->timestamps();
         });
     }
