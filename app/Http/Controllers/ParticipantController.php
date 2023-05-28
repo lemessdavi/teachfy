@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeckStoreRequest;
+use App\Http\Requests\ParticipantStoreRequest;
 use App\Models\Participant;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class ParticipantController extends Controller
 {
-    public function store(DeckStoreRequest $request): JsonResponse
+    public function store(ParticipantStoreRequest $request): JsonResponse
     {
         try {
             DB::beginTransaction();
