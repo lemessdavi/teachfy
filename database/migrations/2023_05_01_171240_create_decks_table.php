@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('decks', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Folder::class);
+            $table->foreignIdFor(Folder::class)->nullable();
             $table->string('name');
             $table->smallInteger('public')->default(0); //add check constraint [0,1] binary
             $table->smallInteger('clonable')->default(0); //add check constraint [0,1] binary
