@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class DeckController extends Controller {
 
+    public function index()
+    {
+        return response()->json(['message' => 'Decks listados com sucesso.', 'data' => Deck::all()]);
+    }
+
     public function store(DeckStoreRequest $request): JsonResponse
     {
         try {
@@ -53,7 +58,7 @@ class DeckController extends Controller {
 
             $deck = Deck::findOrFail($id);
             $deck->fill($request->all());
-            $deck->save();    
+            $deck->save();
 
             DB::commit();
             return response()->json(['message' => 'Registro alterado com sucesso', 'data' => $deck]);
