@@ -22,14 +22,17 @@ class DeckController extends Controller {
         try {
             DB::beginTransaction();
 
-            $deck = new Deck();
-            $deck->fill($request->all());
+            $deck = Deck::create($request->all(), true);
 
             if ($request->get('cards', false) && is_array($request->get('cards'))) {
-                $deck->cards()->Many($request->get('cards'));
+                foreach ($request->get('cards') as $card) {
+                    $newCard = new Card();
+                    $newCard->fill($card);
+                    $newCard->deck_id = $deck->id;
+                    $newCard->deck_type = $deck->type;
+                    $newCard->save();
+                }
             }
-
-            $deck->save();
 
             DB::commit();
             return response()->json(['message' => 'Registro salvo com sucesso', 'data' => $deck]);
