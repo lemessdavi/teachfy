@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeckStoreRequest;
+use App\Models\Card;
 use App\Models\Deck;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -21,9 +22,13 @@ class DeckController extends Controller {
         try {
             DB::beginTransaction();
 
-            // $deck = Deck::create($request->all());
             $deck = new Deck();
             $deck->fill($request->all());
+
+            if ($request->get('cards', false) && is_array($request->get('cards'))) {
+                $deck->cards()->Many($request->get('cards'));
+            }
+
             $deck->save();
 
             DB::commit();
