@@ -16,9 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('decks', DeckController::class);
+Route::post('/login', [TokenController::class, 'gerarToken']);
 
-Route::resource('users', UserController::class);
+Route::get('decks',  [DeckController::class, 'index']);
+
+//deve estar dentro do middleware auth
+Route::apiResource('decks', DeckController::class);
+Route::apiResource('users', UserController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

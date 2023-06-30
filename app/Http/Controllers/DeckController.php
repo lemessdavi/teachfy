@@ -14,7 +14,7 @@ class DeckController extends Controller {
 
     public function index()
     {
-        return response()->json(['message' => 'Decks listados com sucesso.', 'data' => Deck::all()]);
+        return response()->json(['message' => 'Decks listados com sucesso.', 'data' => Deck::where('public', 1)->get()]);
     }
 
     public function store(DeckStoreRequest $request): JsonResponse
