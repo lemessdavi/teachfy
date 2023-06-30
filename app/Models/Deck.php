@@ -24,7 +24,8 @@ class Deck extends Model
         'public',
         'clonable',
         'feedback',
-        'type'
+        'type',
+        'description'
         //maybe the index?
     ];
 
