@@ -8,6 +8,7 @@ use App\Models\Deck;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DeckController extends Controller {
@@ -22,7 +23,10 @@ class DeckController extends Controller {
         try {
             DB::beginTransaction();
 
-            $deck = Deck::create($request->all(), true);
+            $deck = new Deck();
+            $deck->fill($request->all());
+            $deck->user_id = Auth::user()->id;
+            $deck->save();
 
             if ($request->get('cards', false) && is_array($request->get('cards'))) {
                 foreach ($request->get('cards') as $card) {
