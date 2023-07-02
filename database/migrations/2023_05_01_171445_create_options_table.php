@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Card::class);
+            $table->foreignId('card_id')->references('id')->on('cards');
 
             $table->string('description');
             $table->smallInteger('correct_answer'); //maybe nullable?

@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('decks', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Folder::class)->nullable();
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('folder_id')->nullable()->references('id')->on('folders');
             $table->string('name');
-            $table->smallInteger('public')->default(0); //add check constraint [0,1] binary
-            $table->smallInteger('clonable')->default(0); //add check constraint [0,1] binary
-            $table->smallInteger('feedback')->default(0); //add check constraint [0,1] binary
-            $table->smallInteger('type'); //add check constraint [0,1]
+            $table->smallInteger('public')->default(0);
+            $table->smallInteger('clonable')->default(0);
+            $table->smallInteger('feedback')->default(0);
+            $table->smallInteger('type');
 
             $table->unique(['id', 'type']);
 

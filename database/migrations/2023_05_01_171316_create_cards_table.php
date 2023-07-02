@@ -19,12 +19,12 @@ return new class extends Migration
             $table->smallInteger('deck_type');
             $table->foreign(['deck_id', 'deck_type'])->references(['id', 'type'])->on('decks');
 
-            $table->smallInteger('type'); //add check constraint [0,1] 
+            $table->smallInteger('type');
             $table->text('question');
             $table->text('answer')->nullable();
             $table->decimal('points', $precision = 5, $scale = 2)->nullable(); //this column name needs to be changed
 
-            
+
             $table->timestamps();
         });
     }

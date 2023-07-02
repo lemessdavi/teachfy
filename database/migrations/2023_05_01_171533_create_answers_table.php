@@ -16,9 +16,9 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Card::class);
-            $table->foreignIdFor(Option::class)->nullable();
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('card_id')->references('id')->on('cards');
+            $table->foreignId('option_id')->nullable()->references('id')->on('options');
 
             $table->text('difficulty')->nullable();
 

@@ -14,10 +14,10 @@ return new class extends Migration
     {
         Schema::create('folders', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Folder::class)->nullable(); //father
+            $table->foreignId('folder_id')->nullable()->references('id')->on('folders');//father
             $table->string('name');
-            $table->smallInteger('public')->default(0); //add check constraint [0,1] binary | added in folderRequest rules 
-            $table->smallInteger('clonable')->default(0); //add check constraint [0,1] binary | added in folderRequest rules 
+            $table->smallInteger('public')->default(0);
+            $table->smallInteger('clonable')->default(0);
             $table->timestamps();
         });
     }

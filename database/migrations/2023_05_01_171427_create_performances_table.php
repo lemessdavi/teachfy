@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('performances', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Card::class);
-            $table->foreignIdFor(User::class);
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('card_id')->references('id')->on('cards');
             $table->smallInteger('performance'); //maybe change the name of this column
 
             $table->timestamps();
