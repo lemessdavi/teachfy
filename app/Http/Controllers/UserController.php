@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -32,7 +33,8 @@ class UserController extends Controller
 
             $user = new User();
             $user->fill($request->all());
-            $user->save();    
+            $user->password = Hash::make($request->password);
+            $user->save();
 
             DB::commit();
             return response()->json(['message' => 'Registro salvo com sucesso', 'data' => $user]);
@@ -72,7 +74,8 @@ class UserController extends Controller
 
             $user = User::findOrFail($id);
             $user->fill($request->all());
-            $user->save();    
+            $user->password = Hash::make($request->password);
+            $user->save();
 
             DB::commit();
             return response()->json(['message' => 'Registro alterado com sucesso', 'data' => $user]);
