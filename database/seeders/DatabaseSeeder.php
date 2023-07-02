@@ -14,11 +14,11 @@ class DatabaseSeeder extends Seeder
     {
          \App\Models\User::factory(10)->create();
 
-         \App\Models\Participant::create([
-            'user_id'=>1,
-            'deck_id'=>1,
-            'permission'=>1
-         ]);
+        //  \App\Models\Participant::create([
+        //     'user_id'=>1,
+        //     'deck_id'=>1,
+        //     'permission'=>1
+        //  ]);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
