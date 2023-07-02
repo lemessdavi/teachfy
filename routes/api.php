@@ -1,29 +1,22 @@
 <?php
 
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AutomaticCardCreationController;
 use App\Http\Controllers\DeckController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::post('/login', [LoginController::class, 'login']);
 
-Route::post('/login', [TokenController::class, 'gerarToken']);
+Route::get('decks', [DeckController::class, 'index']);
 
-Route::get('decks',  [DeckController::class, 'index']);
+Route::post('users', [UserController::class, 'store']);
+Route::put('users', [UserController::class, 'update']);
+Route::get('users', [UserController::class, 'show']);
 
-//deve estar dentro do middleware auth
-Route::apiResource('decks', DeckController::class);
-Route::apiResource('users', UserController::class);
+//autenticação
+Route::group(['middleware' => ['auth.react']], function () {
+    Route::apiResource('decks', DeckController::class);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('/generate', [AutomaticCardCreationController::class, 'create']);
 });
