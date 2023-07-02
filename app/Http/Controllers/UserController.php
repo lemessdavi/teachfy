@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Services\TokenService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class UserController extends Controller
             $user->fill($request->all());
             $user->password = Hash::make($request->password);
             $user->save();
+            $user->token = TokenService::generateUserToken($user);
 
             DB::commit();
             return response()->json(['message' => 'Registro salvo com sucesso', 'data' => $user]);
