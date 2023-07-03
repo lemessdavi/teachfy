@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use OpenAI as GlobalOpenAI;
 use OpenAI\Laravel\Facades\OpenAI;
 
-Route::get('/ask/{n}/{prompt}/{type}', function ($n, $prompt, $type) {
+Route::get('/api/ask/{n}/{prompt}/{type}', function ($n, $prompt, $type) {
 
   $options = '';
 
