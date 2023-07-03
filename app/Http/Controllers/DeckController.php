@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DeckStoreRequest;
 use App\Models\Card;
 use App\Models\Deck;
+use App\Services\DeckFilterService;
+use App\Services\PaginationService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,9 +15,18 @@ use Illuminate\Support\Facades\DB;
 
 class DeckController extends Controller {
 
-    public function index()
+    public function index(Request $request)
     {
-        $data = Deck::query()->where('user_id', Auth::user()->id)->get();
+        $query = Deck::query()->where('user_id', Auth::user()->id);
+
+        $filters = $request->get('filters', false);
+        if ($filters && is_array($filters)) {
+            DeckFilterService::addFilters($query, $filters);
+        }
+
+        PaginationService::setCurrentPage($request->get('current_page', 1));
+
+        $data = $query->simplePaginate($request->get('per_page', 10));
 
         return response()->json(['message' => 'Decks listados com sucesso.', 'data' => $data]);
     }
