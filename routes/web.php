@@ -32,17 +32,10 @@ Route::get('/ask/{n}/{prompt}/{type}', function ($n, $prompt, $type) {
         $json = 'Apresente o resultado em formato JSON conforme exemplo abaixo, SUA RESPOSTA DEVE SER SOMENTE UM JSON, NADA MAIS
         [{
           "question": teste,
-          "answers": [
-            {
-              "description": "teste1",
-              "isCorrect": 0
-            },
-            {
-              "description": "teste2",
-              "isCorrect": 1
-            }
+          "answer": resposta teste
           ]
-        }]';
+        }]
+        ';
     };
 
     $result = OpenAI::completions()->create([
