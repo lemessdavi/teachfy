@@ -64,6 +64,7 @@ class DeckController extends Controller {
         //
         try {
             $deck = Deck::findOrFail($id);
+            $deck->cards;
 
             return response()->json(['message' => 'Registro: ', 'data' => $deck]);
         } catch (Exception $e) {

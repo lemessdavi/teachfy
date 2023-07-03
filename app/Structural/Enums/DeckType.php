@@ -4,14 +4,14 @@ namespace App\Structural\Enums;
 
 enum DeckType: int {
 
-    case ANKI       = 1;
-    case AVALIATIVO = 2;
+    case AVALIATIVO = 1;
+    case ANKI       = 2;
 
     public function label(): string
     {
         return match ($this) {
-            self::ANKI => 'Anki',
             self::AVALIATIVO => 'Avaliativo',
+            self::ANKI => 'Anki',
             default => 'Label não cadastrada'
         };
     }
