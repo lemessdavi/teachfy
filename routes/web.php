@@ -30,13 +30,19 @@ Route::get('/ask/{n}/{prompt}/{type}', function ($n, $prompt, $type) {
     if($type == 2){ //dissertativa and anki
         $answer = ', por fim me indique também qual é a resposta correta para a pergunta';
         $json = 'Apresente o resultado em formato JSON conforme exemplo abaixo, SUA RESPOSTA DEVE SER SOMENTE UM JSON, NADA MAIS
-        {
-          [{
-            "question": teste,
-            "answer": resposta teste
-            ]
-          }]
-        }';
+        [{
+          "question": teste,
+          "answers": [
+            {
+              "description": "teste1",
+              "isCorrect": 0
+            },
+            {
+              "description": "teste2",
+              "isCorrect": 1
+            }
+          ]
+        }]';
     };
 
     $result = OpenAI::completions()->create([
