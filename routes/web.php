@@ -11,28 +11,31 @@ Route::get('/ask/{n}/{prompt}/{type}', function ($n, $prompt, $type) {
     if($type == 1 ){ //objetiva
         $options = ', toda questao deve ser objetiva, contendo 4 opcoes de resposta';
         $answer  =  ', por fim me indique também qual é a resposta correta para a pergunta';
-        $json = 'Apresente o resultado em formato JSON conforme exemplo abaixo 
-        {
-            "question": teste,
-            "answers": [
-              {
-                "description": "teste1",
-                "isCorrect": 0
-              },
-              {
-                "description": "teste2",
-                "isCorrect": 1
-              }
-            ]
-          }';
+        $json = 'Apresente o resultado em formato JSON conforme exemplo abaixo, SUA RESPOSTA DEVE SER SOMENTE UM JSON, NADA MAIS 
+        [{
+          "question": teste,
+          "answers": [
+            {
+              "description": "teste1",
+              "isCorrect": 0
+            },
+            {
+              "description": "teste2",
+              "isCorrect": 1
+            }
+          ]
+        }]';
     };
 
     if($type == 2){ //dissertativa and anki
         $answer = ', por fim me indique também qual é a resposta correta para a pergunta';
-        $json = 'Apresente o resultado em formato JSON conforme exemplo abaixo 
+        $json = 'Apresente o resultado em formato JSON conforme exemplo abaixo, SUA RESPOSTA DEVE SER SOMENTE UM JSON, NADA MAIS
         {
-          "question": teste,
-          "answer": resposta teste
+          [{
+            "question": teste,
+            "answer": resposta teste
+            ]
+          }]
         }';
     };
 
