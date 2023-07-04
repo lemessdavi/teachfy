@@ -8,6 +8,7 @@ use App\Services\TokenService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -52,11 +53,11 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         //
         try {
-            $user = User::findOrFail($id);
+            $user = User::findOrFail(Auth::user()->id);
 
             return response()->json(['message' => 'Registro:', 'data' => $user]);
         } catch (Exception $e) {
@@ -68,13 +69,13 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): JsonResponse
+    public function update(Request $request): JsonResponse
     {
         //
         try {
             DB::beginTransaction();
 
-            $user = User::findOrFail($id);
+            $user = User::findOrFail(Auth::user()->id);
             $user->fill($request->all());
             $user->password = Hash::make($request->password);
             $user->save();

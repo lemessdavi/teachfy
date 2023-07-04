@@ -13,11 +13,11 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/community', [CommunityController::class, 'index']);
 
 Route::post('/users', [UserController::class, 'store']);
-Route::put('/users/{id}', [UserController::class, 'update']);
-Route::get('/users/{id}', [UserController::class, 'show']);
 
 //autenticação
 Route::group(['middleware' => ['auth.react']], function () {
+    Route::put('/users', [UserController::class, 'update']);
+    Route::get('/users', [UserController::class, 'show']);
     Route::apiResource('decks', DeckController::class);
 
     Route::get('/generate', [AutomaticCardCreationController::class, 'create']);
