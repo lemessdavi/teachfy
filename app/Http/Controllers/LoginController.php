@@ -21,7 +21,7 @@ class LoginController extends Controller {
             }
 
             $token = TokenService::generateUserToken($user);
-            return response()->json(['message' => 'Login efetuado com sucesso', 'data' => ['token' => $token]]);
+            return response()->json(['message' => 'Login efetuado com sucesso', 'data' => ['token' => $token, 'user' => $user]]);
         } catch (Exception $e) {
             throw new Exception('E-mail ou senha inválidos. ' . $e->getMessage());
         }
