@@ -22,9 +22,9 @@ class CardStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'deck_id' => 'required|exists:deck',
+            'deck_id' => 'required',
             'deck_type' => 'required',
-            'type' => 'required|boolean',
+            'type' => 'required',
             'question' => 'required',
             'answer' => 'nullable',
             'points' => 'decimal:2|nullable'

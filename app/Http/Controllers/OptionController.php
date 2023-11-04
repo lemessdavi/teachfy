@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OptionStoreRequest;
+use App\Models\Card;
 use App\Models\Option;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -52,13 +53,29 @@ class OptionController extends Controller
 
             $option = Option::findOrFail($id);
             $option->fill($request->all());
-            $option->save();    
+            $option->save();
 
             DB::commit();
             return response()->json(['message' => 'Registro alterado com sucesso', 'data' => $option]);
         } catch (Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());
+        }
+    }
+
+
+    public function filteredOption(int $cardId)
+    {
+        try {
+            DB::beginTransaction();
+
+            $card = Card::findOrFail($cardId);
+            $options = $card->options;
+
+            DB::commit();
+            return response()->json(['message' => 'Options carregadas com sucesso', 'data' => $options]);
+        }catch (Exception ){
+            DB::rollBack();
         }
     }
 }

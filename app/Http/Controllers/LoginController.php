@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class LoginController extends Controller {
 
     public function login(LoginRequest $request): JsonResponse|array {
+        //return response()->json(['message' => 'Login efetuado com sucesso']);
         try {
             $user = User::query()->where('email', $request->email)->first();
 

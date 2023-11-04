@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AutomaticCardCreationController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DeckController;
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use OpenAI\Laravel\Facades\OpenAI;
@@ -19,6 +21,15 @@ Route::group(['middleware' => ['auth.react']], function () {
     Route::put('/users', [UserController::class, 'update']);
     Route::get('/users', [UserController::class, 'show']);
     Route::apiResource('decks', DeckController::class);
+    Route::apiResource('cards', CardController::class);
+    Route::apiResource('options', OptionController::class);
+
+
+    Route::get('/cards/{id}/options', [OptionController::class, 'filteredOption']);
+
+
+
+    Route::post('/cards', [CardController::class, 'store'] );
 
     Route::get('/generate', [AutomaticCardCreationController::class, 'create']);
 

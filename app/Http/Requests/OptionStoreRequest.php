@@ -22,7 +22,7 @@ class OptionStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'card_id' => 'required|exists:cards',
+            'card_id' => 'required',
             'description' => 'required',
             'correct_answer' => 'required|boolean'
         ];
