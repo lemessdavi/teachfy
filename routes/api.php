@@ -16,6 +16,8 @@ Route::get('/community', [CommunityController::class, 'index']);
 
 Route::post('/users', [UserController::class, 'store']);
 
+Route::get('/allfromdeck/{id}', [DeckController::class, 'getAllFromDeck']);
+
 //autenticação
 Route::group(['middleware' => ['auth.react']], function () {
     Route::put('/users', [UserController::class, 'update']);

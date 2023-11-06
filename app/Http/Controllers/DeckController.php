@@ -93,4 +93,19 @@ class DeckController extends Controller {
             throw new Exception($e->getMessage());
         }
     }
+
+
+    public function getAllFromDeck(string $id){
+        try {
+            DB::beginTransaction();
+
+            $query = Deck::with('cards')->with('options')->where('id', $id)->get();
+
+            DB::commit();
+            return response()->json(['message' => 'Registro alterado com sucesso', 'data' => $query]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
 }
