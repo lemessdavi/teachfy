@@ -23,8 +23,8 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed',
+            'email' => 'required|email|regex:/^\S+@\S+\.\S+$/',
+            'password' => 'required|confirmed|min:8|max:16|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/',
         ];
     }
 

@@ -23,7 +23,6 @@ class UserController extends Controller
         return response()->json(['message' => 'Todos os users:', 'data' => User::all()]);
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -32,7 +31,6 @@ class UserController extends Controller
         //
         try {
             DB::beginTransaction();
-
             $user = new User();
             $user->fill($request->all());
             $user->password = Hash::make($request->password);
@@ -40,10 +38,10 @@ class UserController extends Controller
             $user->token = TokenService::generateUserToken($user);
 
             DB::commit();
-            return response()->json(['message' => 'Registro salvo com sucesso', 'data' => $user]);
+            return response()->json(['message' => 'Registro salvo com sucesso', 'data' => $user], 201);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new Exception($e->getMessage());
+            abort(400, "Dados inválidos");
         }
 
 
@@ -91,8 +89,16 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $email)
     {
-        //
+        $user = User::findOrFail($email);
+
+        if ($user) {
+            $user->delete();
+
+            return response()->json(['message' => 'user excluído com sucesso']);
+        }
+
+        return response()->json(['message' => 'user não encontrado'], 404);
     }
 }

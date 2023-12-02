@@ -41,7 +41,7 @@ class CardController extends Controller
             $card->save();
 
             DB::commit();
-            return response()->json(['message' => 'Registro salvo com sucesso', 'data' => $card]);
+            return response()->json(['message' => 'Registro salvo com sucesso', 'data' => $card], 201);
         } catch (Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());//deverá haver tratamento de exception
