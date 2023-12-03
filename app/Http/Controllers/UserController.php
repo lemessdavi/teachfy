@@ -53,7 +53,6 @@ class UserController extends Controller
      */
     public function show()
     {
-        //
         try {
             $user = User::findOrFail(Auth::user()->id);
 
@@ -89,16 +88,23 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $email)
+    public function destroy($id)
     {
-        $user = User::findOrFail($email);
-
-        if ($user) {
+        try {
+            $user= User::FindOrFail($id);
             $user->delete();
-
-            return response()->json(['message' => 'user excluído com sucesso']);
+            return response()->json(['user'=> $user], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message'=>'user not found!'], 404);
         }
+    }
 
-        return response()->json(['message' => 'user não encontrado'], 404);
+    public function getOne($id) {
+        try {
+            $user= User::FindOrFail($id);
+            return response()->json(['user'=> $user], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message'=>'user not found!'], 404);
+        }
     }
 }

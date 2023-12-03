@@ -22,7 +22,8 @@ Route::get('/allfromdeck/{id}', [DeckController::class, 'getAllFromDeck']);
 Route::group(['middleware' => ['auth.react']], function () {
     Route::put('/users', [UserController::class, 'update']);
     Route::get('/users', [UserController::class, 'show']);
-    Route::delete('/users/{email}', [UserController::class, 'destroy']);
+    Route::get('/users/{id}', [UserController::class, 'getOne']);
+    Route::delete('/users/delete/{id}', [UserController::class, 'destroy']);
     Route::apiResource('decks', DeckController::class);
     Route::apiResource('cards', CardController::class);
     Route::apiResource('options', OptionController::class);
