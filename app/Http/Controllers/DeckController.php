@@ -94,8 +94,7 @@ class DeckController extends Controller {
         }
     }
 
-
-    public function getAllFromDeck(string $id){
+    public function getAllFromDeck(string $id) {
         try {
             DB::beginTransaction();
 
@@ -106,6 +105,16 @@ class DeckController extends Controller {
         } catch (Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());
+        }
+    }
+
+    public function destroy($id) {
+        try {
+            $deck = Deck::FindOrFail($id);
+            $deck->delete();
+            return response()->json(['deck'=> $deck], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message'=>'deck not found!'], 404);
         }
     }
 }

@@ -9,21 +9,6 @@ use Tests\TestCase;
 class UserTDDTest extends TestCase
 {
     /** @test */
-    public function DeveRecuperarInformacoesDeUsuarioExistente(): void
-    {
-        $headers = [
-            'accept' => 'application/json',
-            'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
-        ];
-
-        $url = 'http://127.0.0.1:8000/api/users/1';
-
-        $response = $this->get($url, [], $headers);
-
-        $response->assertStatus(200);
-    }
-
-    /** @test */
     public function DeveRemoverUsuarioExistente(): void
     {
         $this->criarUsuario();
@@ -53,6 +38,36 @@ class UserTDDTest extends TestCase
         $urlDelete = 'http://127.0.0.1:8000/api/users/delete/-1';
 
         $response = $this->delete($urlDelete, [], $headers);
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function DeveRecuperarInformacoesDeUsuarioExistente(): void
+    {
+        $headers = [
+            'accept' => 'application/json',
+            'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
+        ];
+
+        $url = 'http://127.0.0.1:8000/api/users/1';
+
+        $response = $this->get($url, $headers);
+
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function DeveRecuperarInformacoesDeUsuarioInexistente(): void
+    {
+        $headers = [
+            'accept' => 'application/json',
+            'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
+        ];
+
+        $url = 'http://127.0.0.1:8000/api/users/-1';
+
+        $response = $this->get($url, $headers);
 
         $response->assertStatus(404);
     }

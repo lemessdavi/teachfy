@@ -28,10 +28,7 @@ Route::group(['middleware' => ['auth.react']], function () {
     Route::apiResource('cards', CardController::class);
     Route::apiResource('options', OptionController::class);
 
-
     Route::get('/cards/{id}/options', [OptionController::class, 'filteredOption']);
-
-
 
     Route::post('/cards', [CardController::class, 'store'] );
 
