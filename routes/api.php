@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use OpenAI\Laravel\Facades\OpenAI;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
@@ -90,27 +91,43 @@ Route::group(['middleware' => ['auth.react']], function () {
     });
 
 
-    Route::post('/send-notification', function (Request $request) {
+    Route::post('/notifications', function (Request $request) {
         $title = $request->input('title');
         $body = $request->input('body');
+    
+        DB::table('notifications')->insert([
+            'title' => $title,
+            'body' => $body
+        ]);
+    
+        return response()->json(['success' => true, 'title' => $title, 'body' => $body]);
+    });
+
+    Route::post('/send-notification', function () {
+        // Selecionar uma notificação aleatória do banco de dados
+        $notificationData = DB::table('notifications')->inRandomOrder()->first();
+    
+        if (!$notificationData) {
+            return response()->json(['success' => false, 'error' => 'No notifications found']);
+        }
     
         $factory = (new Factory)->withServiceAccount('../firebase-config.json');
         $messaging = $factory->createMessaging();
     
         $notification = Notification::fromArray([
-            'title' => $title,
-            'body' => $body
+            'title' => $notificationData->title,
+            'body' => $notificationData->body
         ]);
     
         $message = CloudMessage::withTarget('token', "cG7RuH8xR-mJSM94gcaaYe:APA91bEHgNkqL6RHWm_UrcYDI7VLCUcXmoXwftkCjFPJZY1uW6DS-X88ewI27Dgz-J8MyntcQRntG9oqvZZq_3AMJXkKr781t6I9biqKOUpGkcDo81v7GdDae4MzdLeQDClozOwPEbz8")
             ->withNotification($notification); // Adicione a notificação à mensagem
     
-            try {
-                $messaging->send($message);
-            
-                return response()->json(['success' => true, 'title' => $title, 'body' => $body]);
-            } catch (\Exception $e) {
-                return response()->json(['success' => false, 'error' => $e->getMessage()]);
-            }
+        try {
+            $messaging->send($message);
+    
+            return response()->json(['success' => true, 'title' => $notificationData->title, 'body' => $notificationData->body]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
+        }
     });
 });
