@@ -18,7 +18,7 @@ class UserTDDTest extends TestCase
             'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
         ];
 
-        $urlDelete = 'http://127.0.0.1:8000/api/users/delete/2';
+        $urlDelete = 'http://127.0.0.1:8000/api/users/delete/1';
 
         $response = $this->delete($urlDelete, [], $headers);
 
@@ -29,6 +29,8 @@ class UserTDDTest extends TestCase
     public function DeveFalharAoRemoverUsuarioInexistente(): void
     {
         $this->withoutExceptionHandling();
+
+        $this->criarUsuario();
 
         $headers = [
             'accept' => 'application/json',
@@ -50,7 +52,9 @@ class UserTDDTest extends TestCase
             'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
         ];
 
-        $url = 'http://127.0.0.1:8000/api/users/1';
+        $this->criarUsuario();
+
+        $url = 'http://127.0.0.1:8000/api/users/2';
 
         $response = $this->get($url, $headers);
 
@@ -58,12 +62,14 @@ class UserTDDTest extends TestCase
     }
 
     /** @test */
-    public function DeveRecuperarInformacoesDeUsuarioInexistente(): void
+    public function DeveFalharAoRecuperarInformacoesDeUsuarioInexistente(): void
     {
         $headers = [
             'accept' => 'application/json',
             'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
         ];
+
+        $this->criarUsuario();
 
         $url = 'http://127.0.0.1:8000/api/users/-1';
 
@@ -77,10 +83,10 @@ class UserTDDTest extends TestCase
         $url = 'http://127.0.0.1:8000/api/users';
 
         $user = [
-            'name' => 'cauemarques',
-            'email' => 'cauemarques@gmail.com',
-            'password' => 'caue1234',
-            'password_confirmation' => 'caue1234'
+            'name' => 'caue',
+            'email' => 'davi@email.com',
+            'password' => 'teste1234',
+            'password_confirmation' => 'teste1234'
         ];
 
         $this->post($url, $user);

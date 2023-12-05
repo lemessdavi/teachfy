@@ -16,6 +16,7 @@ class CardTDDTest extends TestCase
             'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
         ];
 
+        $this->criarUsuario();
         $this->criarDeck($headers);
 
         $url = 'http://127.0.0.1:8000/api/cards';
@@ -52,5 +53,19 @@ class CardTDDTest extends TestCase
         ];
 
         $this->post($url, $deck, $headers);
+    }
+
+    public function criarUsuario()
+    {
+        $url = 'http://127.0.0.1:8000/api/users';
+
+        $user = [
+            'name' => 'caue',
+            'email' => 'davi@email.com',
+            'password' => 'teste1234',
+            'password_confirmation' => 'teste1234'
+        ];
+
+        $this->post($url, $user);
     }
 }

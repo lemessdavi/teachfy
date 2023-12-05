@@ -55,7 +55,7 @@ class DeckController extends Controller {
             return response()->json(['message' => 'Registro salvo com sucesso', 'data' => $deck]);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new Exception($e->getMessage());//deverá haver tratamento de exception
+            return response()->json(['message'=>'deck not found!'], 404);
         }
     }
 
@@ -69,7 +69,7 @@ class DeckController extends Controller {
             return response()->json(['message' => 'Registro: ', 'data' => $deck]);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new Exception($e->getMessage());
+            return response()->json(['message'=>'deck not found!'], 404);
         }
     }
 
@@ -90,7 +90,7 @@ class DeckController extends Controller {
             return response()->json(['message' => 'Registro alterado com sucesso', 'data' => $deck]);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new Exception($e->getMessage());
+            return response()->json(['message'=>'deck not found!'], 404);
         }
     }
 
@@ -100,11 +100,15 @@ class DeckController extends Controller {
 
             $query = Deck::with('cards')->with('options')->where('id', $id)->get();
 
+            if(count($query) == 0) {
+                throw new Exception();
+            }
+
             DB::commit();
             return response()->json(['message' => 'Registro alterado com sucesso', 'data' => $query]);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new Exception($e->getMessage());
+            return response()->json(['message'=>'deck not found!'], 404);
         }
     }
 

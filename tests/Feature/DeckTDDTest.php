@@ -16,6 +16,7 @@ class DeckTDDTest extends TestCase
             'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
         ];
 
+        $this->criarUsuario();
         $this->criarDeck($headers);
 
         $url = 'http://127.0.0.1:8000/api/decks/1';
@@ -57,22 +58,22 @@ class DeckTDDTest extends TestCase
         $response->assertStatus(200);
     }
 
-        /** @test */
-        public function DeveFalharAoRecuperarCardsDeUmDeckInexistente(): void
-        {
-            $headers = [
-                'accept' => 'application/json',
-                'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
-            ];
+    /** @test */
+    public function DeveFalharAoRecuperarCardsDeUmDeckInexistente(): void
+    {
+        $headers = [
+            'accept' => 'application/json',
+            'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
+        ];
 
-            $this->criarDeck($headers);
+        $this->criarDeck($headers);
 
-            $url = 'http://127.0.0.1:8000/api/allfromdeck/-1';
+        $url = 'http://127.0.0.1:8000/api/allfromdeck/-1';
 
-            $response = $this->get($url, [], $headers);
+        $response = $this->get($url, $headers);
 
-            $response->assertStatus(404);
-        }
+        $response->assertStatus(404);
+    }
 
     public function criarDeck($headers)
     {
@@ -92,5 +93,53 @@ class DeckTDDTest extends TestCase
         ];
 
         $this->post($url, $deck, $headers);
+    }
+
+    /** @test */
+    public function DeveRecuperarDecksDeUmUsuarioExistente(): void
+    {
+        $headers = [
+            'accept' => 'application/json',
+            'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
+        ];
+
+        $this->criarDeck($headers);
+
+        $url = 'http://127.0.0.1:8000/api/decks';
+
+        $response = $this->get($url, $headers);
+
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function DeveRecuperarDecksDeUmUsuarioInexistente(): void
+    {
+        $headers = [
+            'accept' => 'application/json',
+            'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRhdmlAZW1haWwuY29tIn0.NUVoztYgNzqEtp0fKN36cWaMih0itoDqfONPD06NdYE'
+        ];
+
+        $this->criarDeck($headers);
+
+        $url = 'http://127.0.0.1:8000/api/decks/-1';
+
+        $response = $this->get($url, $headers);
+
+        $response->assertStatus(404);
+    }
+
+    public function criarUsuario()
+    {
+        $url = 'http://127.0.0.1:8000/api/users';
+
+        $user = [
+            'name' => 'caue',
+            'email' => 'davi@email.com',
+            'password' => 'teste1234',
+            'password_confirmation' => 'teste1234'
+        ];
+
+        $this->post($url, $user);
     }
 }
